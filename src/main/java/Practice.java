@@ -51,5 +51,4 @@ public class Practice {
         ((JavascriptExecutor) driver1).executeScript("arguments[0].scrollIntoView(true)", ele);
         ele.click();
     }
-
 }
