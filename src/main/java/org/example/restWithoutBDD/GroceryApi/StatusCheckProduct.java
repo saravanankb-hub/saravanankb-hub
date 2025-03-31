@@ -19,16 +19,22 @@ public class StatusCheckProduct extends ReqResConfig {
 
     @Test
     public void validateStatus() {
-        ResponseBody body = given().spec(requestSpecification).when().get("status").then().spec(responseSpecification)
-                .statusCode(200).and().extract().response().getBody();
+        ResponseBody body = given().spec(requestSpecification)
+                .when().get("status")
+                .then().spec(responseSpecification)
+                .statusCode(200)
+                .and().extract().response().getBody();
         JsonPath jsonPath = body.jsonPath();
         jsonPath.prettyPrint();
     }
 
     @Test(priority = 1)
     public void getNProducts() {
-        ResponseBody body = given().spec(requestSpecification).when().get("products").then().spec(responseSpecification)
-                .statusCode(200).body("id", hasSize(20)).and().extract().response().getBody();
+        ResponseBody body = given().spec(requestSpecification)
+                .when().get("products")
+                .then().spec(responseSpecification)
+                .statusCode(200).body("id", hasSize(20))
+                .and().extract().response().getBody();
         JsonPath jsonPath = body.jsonPath();
         productId = jsonPath.getInt("id[0]");
 
@@ -81,7 +87,7 @@ public class StatusCheckProduct extends ReqResConfig {
         Map<String, Object> reqPayload = new HashMap<>();
         reqPayload.put("productId", productId);
         reqPayload.put("quantity", 2);
-        ResponseBody res = given().spec(requestSpecification).body(reqPayload).pathParams("cartId", cartId)
+        ResponseBody res = given().spec(requestSpecification).pathParams("cartId", cartId).body(reqPayload)
                 .when().post("carts/{cartId}/items")
                 .then().spec(responseSpecification).statusCode(201)
                 .and().extract().response().body();
