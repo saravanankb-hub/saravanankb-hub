@@ -63,7 +63,8 @@ public class StatusCheckProduct extends ReqResConfig {
 
     @Test(priority = 3)
     public void createCart() {
-        ResponseBody res = given().spec(requestSpecification).when().post("/carts")
+        ResponseBody res = given().spec(requestSpecification)
+                .when().post("/carts")
                 .then().spec(responseSpecification).statusCode(201)
                 .body("created", equalTo(true))
                 .and().extract().response().body();
@@ -76,7 +77,8 @@ public class StatusCheckProduct extends ReqResConfig {
     @Test(priority = 4)
     public void getCartSingleItem() {
 
-        ResponseBody res = given().spec(requestSpecification).pathParams("cartId", cartId)
+        ResponseBody res = given().spec(requestSpecification)
+                .pathParams("cartId", cartId)
                 .when().get("carts/{cartId}")
                 .then().spec(responseSpecification).statusCode(200)
                 .and().extract().response().getBody();
@@ -87,7 +89,8 @@ public class StatusCheckProduct extends ReqResConfig {
         Map<String, Object> reqPayload = new HashMap<>();
         reqPayload.put("productId", productId);
         reqPayload.put("quantity", 2);
-        ResponseBody res = given().spec(requestSpecification).pathParams("cartId", cartId).body(reqPayload)
+        ResponseBody res = given().spec(requestSpecification)
+                .pathParams("cartId", cartId).body(reqPayload)
                 .when().post("carts/{cartId}/items")
                 .then().spec(responseSpecification).statusCode(201)
                 .and().extract().response().body();
@@ -96,7 +99,8 @@ public class StatusCheckProduct extends ReqResConfig {
 
     @Test(dependsOnMethods = "addItemToCart")
     public void getCartItems() {
-        ResponseBody res = given().spec(requestSpecification).pathParams("cartId", cartId)
+        ResponseBody res = given().spec(requestSpecification)
+                .pathParams("cartId", cartId)
                 .when().get("carts/{cartId}/items")
                 .then().spec(responseSpecification).statusCode(200)
                 .and().extract().response().body();
@@ -109,7 +113,9 @@ public class StatusCheckProduct extends ReqResConfig {
         // Or fetch productId dynamically here
         if (productId == 0) {
             // Fetch the productId only if it's not set
-            ResponseBody body = given().spec(requestSpecification).when().get("products").then().spec(responseSpecification)
+            ResponseBody body = given().spec(requestSpecification)
+                    .when().get("products")
+                    .then().spec(responseSpecification)
                     .statusCode(200).extract().response().getBody();
             JsonPath jsonPath = body.jsonPath();
             productId = jsonPath.getInt("id[1]");

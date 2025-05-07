@@ -6,13 +6,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Driver;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import static java.time.Duration.ofSeconds;
-import static org.apache.commons.io.function.IOConsumer.forEach;
 
 public class makeMyTrip {
     static WebDriver driver1;

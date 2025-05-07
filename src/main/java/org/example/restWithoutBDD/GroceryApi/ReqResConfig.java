@@ -17,7 +17,8 @@ public class ReqResConfig {
 
     @BeforeClass
     public void reqResSpecBuilder() {
-        requestSpecification = new RequestSpecBuilder().setBaseUri("https://simple-grocery-store-api.glitch.me/")
+        requestSpecification = new RequestSpecBuilder()
+                .setBaseUri("https://simple-grocery-store-api.glitch.me/")
                 .setContentType("application/json\r\n").build();
         responseSpecification = new ResponseSpecBuilder()
                 .expectStatusCode(anyOf(is(200), is(201), is(204)))

@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static java.time.Duration.ofSeconds;
@@ -80,5 +81,44 @@ public class Practice {
     private static void jsClick(WebElement ele) {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true)", ele);
         ele.click();
+    }
+
+    private static void streamAPICases() {
+        driver.get("https://example.com");
+        List<WebElement> options = driver.findElements(By.xpath("//select[@id='myDropdown']/option"));
+        // Check if all options are enabled using Stream + allMatch
+        boolean allEnabled = options.stream()
+                .allMatch(WebElement::isEnabled);
+        System.out.println(allEnabled);//True
+
+//       --------------All are even number or not----------------------
+        List<Integer> numbers = Arrays.asList(2, 4, 6, 8);
+        boolean allEven = numbers.stream()
+                .allMatch(n -> n % 2 == 0);
+        System.out.println("All numbers are even? " + allEven);//All numbers are even? true
+
+        //-------------------Search word partially and trim on spaces----------
+        List<String> words = Arrays.asList(" Automation ", "Selenium", "Serenity BDD", "Cucumber", "Java");
+        String wordToCheck = "serenity"; // try "sel", "cumb", "auto", etc.
+
+        boolean isMatch = words.stream()
+                .map(String::trim) // remove leading/trailing spaces
+                .anyMatch(word -> word.toLowerCase().contains(wordToCheck.toLowerCase()));
+
+        if (isMatch) {
+            System.out.println("\"" + wordToCheck + "\" is found (partial match) in the list.");
+        } else {
+            System.out.println("\"" + wordToCheck + "\" is NOT found.");
+        }//Op - "serenity" is found (partial match) in the list.
+
+//        ----------------Links are clickable and visible with link--------------
+        List<WebElement> inputs = driver.findElements(By.xpath("//input[@type='text']"));
+        boolean allFilled = inputs.stream()
+                .allMatch(link -> {
+                    String href = link.getDomAttribute("href");
+                    return href != null && !href.trim().isEmpty()
+                            && link.isDisplayed()
+                            && link.isEnabled();
+                });
     }
 }

@@ -22,14 +22,14 @@ public class StringFun {
     }
 
     public static void main(String[] args) {
-        // TODO Auto-generated method stub
+
         String str1 = "Saravanan";//String literal -- creating in String pool
         String str2 = "saravanan";
         String str6 = "saravanan";
         String str3 = new String("Saravanan");
         String str4 = new String("saravanan");// Created new obj in memory(heap) - pointing with diff address
         String str5 = new String("saravanan");
-
+// == --> check the place first, whether in Heap or SCP - string constant pool
         System.out.println(str1 == str2);//false case matches (S vs s) due to diff memory locations they stored.
         System.out.println(str1 == str3);//false Created using new keywords refer diff obj even same content
         System.out.println(str1 == str4);//false same as above
@@ -101,7 +101,7 @@ public class StringFun {
             }
         }
         //o/p - new: 2 time(s) | laptop: 2 time(s) |
-        System.out.println("\n------------------------------------------");
+        System.out.println("\n----------------------To Find Union of two arrays--------------------");
         int[] arr1 = {3, 8, 11, 4, 6, 7};
         int[] arr2 = {1, 2, 8, 4, 9, 7};
         // Convert arr2 to a Set for O(1) lookups

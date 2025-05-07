@@ -35,7 +35,9 @@ public class CrudOperation {
         Map<String, Object> reqPayload = new HashMap<>();
         reqPayload.put("name", "Dane");
         reqPayload.put("job", "QA Automation");
-        Response res = given().contentType(ContentType.JSON).body(reqPayload).when().post("api/users");
+        Response res = given().contentType(ContentType.JSON)
+                .body(reqPayload)
+                .when().post("api/users");
         System.out.println(res.then().log().all());
         statusCode = res.then().statusCode(201).extract().statusCode();
         id = res.then().statusCode(201).extract().jsonPath().getInt("id");//to print CreatedAt - use getString
@@ -48,7 +50,8 @@ public class CrudOperation {
         Map<String, Object> reqPayload = new HashMap<>();
         reqPayload.put("name", "Balaji");
         reqPayload.put("job", "Murugan");
-        given().contentType(ContentType.JSON).body(reqPayload)
+        given().contentType(ContentType.JSON)
+                .body(reqPayload)
                 .when().put("api/users/" + id)
                 .then().statusCode(200).log().all();
 
