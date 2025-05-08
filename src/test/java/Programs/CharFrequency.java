@@ -2,6 +2,7 @@ package Programs;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class CharFrequency {
     public static void main(String[] args) {
@@ -13,5 +14,12 @@ public class CharFrequency {
         }
 
         System.out.println(frequencyMap);  // Output: {a=2, r=1, t=3, u=1, e=3, h=1, m=1, o=1}
+
+        Optional<Character> secondDup = input.chars()
+                .mapToObj(c -> (char) c)
+                .filter(c -> frequencyMap.get(c) > 1)
+                .skip(2)
+                .findFirst();
+        System.out.println("Second duplicate character: " + secondDup);
     }
 }
