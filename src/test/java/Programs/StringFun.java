@@ -33,9 +33,11 @@ public class StringFun {
         System.out.println(str1 == str2);//false case matches (S vs s) due to diff memory locations they stored.
         System.out.println(str1 == str3);//false Created using new keywords refer diff obj even same content
         System.out.println(str1 == str4);//false same as above
-        System.out.println(str3 == str4);//false due to diff memory locations they stored.
-        System.out.println(str2 == str4);//false due to diff memory locations they stored.
+        System.out.println(str3 == str4);//false (compares references)
+        System.out.println(str2 == str4);//false (compares references)
         System.out.println(str2 == str6);//true same object
+        System.out.println(str2 == str5);//false (compares references)
+        System.out.println(str4 == str5);//false (compares references)
         System.out.println(str2.equals(str4));//true -content referring the same name
         System.out.println(str1.equals(str3));//true same as above
         System.out.println(str3.equals(str4));//false- content is not equal

@@ -16,6 +16,8 @@ public class VowelsExtract {
         for (int i = 0; i < input.length(); i++) {
             char c = lowerCaseStmt.charAt(i);
             if (c == 'o' || c == 'e' || c == 'i' || c == 'a' || c == 'u') {
+//                continue;} //to print only consonants
+//            else {
                 vowels.append(c);
             }
         }
@@ -23,5 +25,7 @@ public class VowelsExtract {
         //Here to we need to return 2 values but java can return ly one type at a time so declare class with Constructor
         // there using this refer the current instances.
         //return type here is calling that class so, we can pass 2 args now. (vowels and count)
+
+        // Use reg exp -- str.replace("[aeiouAEIOU]","");
     }
 }

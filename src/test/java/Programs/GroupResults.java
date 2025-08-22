@@ -1,6 +1,7 @@
 package Programs;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -17,5 +18,11 @@ public class GroupResults {
                 );
 
         System.out.println(counts);  // Output: {PASS=2, FAIL=2, SKIP=1}
+        /* using GetOrDefault */
+        Map<String, Integer> freqMap = new HashMap<>();
+        for (String freq : testResults) {
+            freqMap.put(freq, freqMap.getOrDefault(freq, 0) + 1);
+        }
+        System.out.println(freqMap);
     }
 }
