@@ -71,7 +71,7 @@ public class StatusCheckProduct extends ReqResConfig {
         JsonPath jsonPath = res.jsonPath();
         cartId = jsonPath.getString("cartId");
         System.out.println("Cart created: " + jsonPath.getBoolean("created")
-                + "\nCart id: " + cartId);
+                + "\nCart id: " + cartId); 
     }
 
     @Test(priority = 4)
