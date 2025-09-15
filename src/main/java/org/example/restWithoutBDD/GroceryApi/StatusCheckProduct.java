@@ -2,6 +2,7 @@ package org.example.restWithoutBDD.GroceryApi;
 
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.ResponseBody;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -36,7 +37,7 @@ public class StatusCheckProduct extends ReqResConfig {
                 .statusCode(200).body("id", hasSize(20))
                 .and().extract().response().getBody();
         JsonPath jsonPath = body.jsonPath();
-        productId = jsonPath.getInt("id[0]");
+        productId = jsonPath.getInt("id[8]");
 
         System.out.println("Product ID: " + productId);
 
@@ -44,8 +45,32 @@ public class StatusCheckProduct extends ReqResConfig {
         long inStockCount = inStockList.stream().filter(inStock -> inStock).count();
 
         System.out.println("Count of inStock products that are true: " + inStockCount);
-
         jsonPath.prettyPrint();
+    }
+
+    @Test(priority = 2, dependsOnMethods = "getNProducts")
+    public void validateProductDetails() {
+        Product product = given().spec(requestSpecification)
+                .pathParams("id", productId)
+                .when().get("/products/{id}")
+                .then().spec(responseSpecification)
+                .statusCode(200)
+                .extract().as(Product.class);
+
+        // Now validate fields
+        System.out.println("Product Name: " + product.getName());
+        System.out.println("Product Category: " + product.getCategory());
+
+        Assert.assertEquals(product.getId(), productId, "Product id Mismatch");
+        Assert.assertEquals(product.getCategory(), "coffee", "Category is Mismatch");
+        Assert.assertTrue(product.isInStock(), "Product should be in Stock");
+        Assert.assertNotNull(product.getName(), "Product name should not be null");
+        Assert.assertEquals(product.getManufacturer(), "Starbucks", "Product Manufacturer should not be null");
+        Assert.assertEquals(product.getPrice() == 40.91, "Product Price is costly");
+        Assert.assertTrue(product.getCurrentStock() == 14, "Product current in-stock is less");
+//negative
+        Assert.assertTrue(product.getPrice() > 100, "Product Price is costly");
+        Assert.assertTrue(product.getCurrentStock() > 15, "Product current in-stock is less");
     }
 
     @Test(priority = 2)
@@ -71,7 +96,7 @@ public class StatusCheckProduct extends ReqResConfig {
         JsonPath jsonPath = res.jsonPath();
         cartId = jsonPath.getString("cartId");
         System.out.println("Cart created: " + jsonPath.getBoolean("created")
-                + "\nCart id: " + cartId); 
+                + "\nCart id: " + cartId);
     }
 
     @Test(priority = 4)
